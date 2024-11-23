@@ -2,6 +2,7 @@ package com.example.harry_details.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,22 +15,47 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil3.compose.AsyncImage
+import com.example.harry_details.models.Character
 import com.example.harry_details.viewmodel.CharacterViewModel
 
 @Composable
 fun CharacterListScreen(
     onCharacterClick: (Character) -> Unit,
-    viewModel: CharacterViewModel = viewModel(),
+    viewModel: CharacterViewModel = hiltViewModel(),
 ) {
-    val character = remember(viewModel) { viewModel.characters }
+    val state by viewModel.state.collectAsState()
 
+    when (val state = state) {
+        CharacterViewModel.State.Loading -> {
+            Box(
+                contentAlignment = Alignment.Center,
+            ) {
+                Text("вау это загрузка")
+            }
+        }
+        is CharacterViewModel.State.Content -> {
+            Content(
+                characters = state.characters,
+                onCharacterClick = onCharacterClick,
+            )
+        }
+    }
+}
+
+@Composable
+fun Content(
+    characters: List<Character>,
+    onCharacterClick: (Character) -> Unit,
+) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -37,7 +63,7 @@ fun CharacterListScreen(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        items(character, key = { it.id }) {
+        items(characters, key = { it.id }) {
             CharacterItem(
                 character = it,
                 onClick = { onCharacterClick(it) }

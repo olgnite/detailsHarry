@@ -1,4 +1,4 @@
-package com.example.details.navigation
+package com.example.harry_details.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -13,7 +13,7 @@ import kotlinx.serialization.Serializable
 data object CharacterListScreen
 
 @Serializable
-data class CharacterDetailsScreen1(val id: String)
+data class CharacterDetailsScreen(val id: String)
 
 @Composable
 fun AppNavigation() {
@@ -21,10 +21,10 @@ fun AppNavigation() {
     NavHost(navController = navController, startDestination = CharacterListScreen) {
         composable<CharacterListScreen> {
             CharacterListScreen(
-                onCharacterClick = { navController.navigate(CharacterDetailsScreen1(it.id)) }
+                onCharacterClick = { navController.navigate(CharacterDetailsScreen(it.id)) }
             )
         }
-        composable<CharacterDetailsScreen1> {
+        composable<CharacterDetailsScreen> {
             CharacterDetailsScreen(
                 viewModel = viewModel()
             )

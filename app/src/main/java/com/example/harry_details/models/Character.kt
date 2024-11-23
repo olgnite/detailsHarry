@@ -1,6 +1,11 @@
 package com.example.harry_details.models
 
-data class Character (
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity("characters")
+data class Character(
+    @PrimaryKey
     val id: String,
     val name: String,
     val house: String,
