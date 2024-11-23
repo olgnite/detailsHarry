@@ -11,9 +11,12 @@ import androidx.navigation.toRoute
 import com.example.harry_details.models.Character
 import com.example.harry_details.navigation.CharacterDetailsScreen
 import com.example.harry_details.network.HarryPoterInstance
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DetailsViewModel(
+@HiltViewModel
+class DetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 

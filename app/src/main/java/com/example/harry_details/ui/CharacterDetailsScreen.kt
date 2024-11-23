@@ -13,7 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil3.compose.AsyncImage
 import com.example.harry_details.models.Character
 import com.example.harry_details.viewmodel.DetailsViewModel
@@ -21,7 +21,7 @@ import com.example.harry_details.viewmodel.DetailsViewModel
 
 @Composable
 fun CharacterDetailsScreen(
-    viewModel: DetailsViewModel = viewModel(),
+    viewModel: DetailsViewModel = hiltViewModel(),
 ) {
     CharacterItem(viewModel.characterState)
 }
